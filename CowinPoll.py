@@ -22,26 +22,27 @@ DistrictID = input("Enter District ID (not PinCode): ")
 
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
 def check(ID, Tarikh):
-	print('Requesting server... ', ID, Tarikh, "\n")
+	print('Requesting server... ', ID, Tarikh)
 	#try:
 	x = requests.get('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=' + ID + '&date=' + Tarikh, headers = headers)
 	#x = requests.get('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=384002&date='+ Tarikh, headers = headers)
 	#Only sessions in this type of response
 
 	if x.status_code == 200:
+		print("Sucessful!\n")
 		response = x.json()
 		#print(response)
 		#response = json.loads(requests.get('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=384002&date=31-03-2021').text)
 		for i in response['centers']:
-			print('----------------------------------------------------------------------------')
-			print('CENTER : ', i['name'])
-			print('----------------------------------------------------------------------------')
+			# print('----------------------------------------------------------------------------')
+			# print('CENTER : ', i['name'])
+			# print('----------------------------------------------------------------------------')
 			for a in i['sessions']:
-				print('Date: ', a['date'], ' Available: ', a['available_capacity'], " Vaccine: ", a['vaccine'], " Age Limit: ", a['min_age_limit'])
+				#print('Date: ', a['date'], ' Available: ', a['available_capacity'], " Vaccine: ", a['vaccine'], " Age Limit: ", a['min_age_limit'])
 				if a['min_age_limit'] == 18:
-					#print(int(a['available_capacity']))
+					#print('Date: ', a['date'], ' Available: ', a['available_capacity'], " Vaccine: ", a['vaccine'], " Age Limit: ", a['min_age_limit'])
 					if int(a['available_capacity']) > 0:
-						#print('Date: ', a['date'], ' Available: ', a['available_capacity'], " Vaccine: ", a['vaccine'], " Age Limit: ", a['min_age_limit'])
+						print('Date: ', a['date'], ' Available: ', a['available_capacity'], " Vaccine: ", a['vaccine'], " Age Limit: ", a['min_age_limit'])
 						print("Vaccine Found !!!")
 						playsound('audio.wav')
 	else:

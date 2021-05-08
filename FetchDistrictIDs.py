@@ -19,11 +19,14 @@ payload={}
 # sec-fetch-mode: cors
 # sec-fetch-site: cross-site
 # user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36 Edg/90.0.818.56
-
+largest = 0
 headers = {'user-agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36 Edg/90.0.818.56'}
 
 for state in range(36):
 	response = requests.request("GET", url+str(state), headers=headers, data=payload, allow_redirects=False).json()
 	for i in response['districts']:
 		print(i['district_id'], " - ", i['district_name'])
+		if i['district_id'] > largest:
+			largest = i['district_id']
 #print(response['districts'])
+print("\n\nTotal : ", largest)
